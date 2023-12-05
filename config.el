@@ -21,8 +21,13 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size 24 :weight 'semi-light)
-      )
+(setq font-size
+      (let ((host (system-name)))
+        (cond
+         ((string= host "ArchBeauty") 36)
+         (t 24))))
+
+(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size font-size :weight 'semi-light))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -51,6 +56,10 @@
        (format "<span style=\"color:%s;\">%s</span>" path desc))
       ((eq format 'latex)
        (format "{\\color{%s}%s}" path desc))))))
+
+(map! :localleader
+      (:map org-mode-map
+       "B" (lambda () (interactive) (org-beamer-export-to-pdf))))
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
