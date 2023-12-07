@@ -24,7 +24,7 @@
 (setq font-size
       (let ((host (system-name)))
         (cond
-         ((string= host "ArchBeauty") 36)
+         ((string= host "ArchBeauty") 40)
          (t 24))))
 
 (setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size font-size :weight 'semi-light))

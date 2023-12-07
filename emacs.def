@@ -1,0 +1,8 @@
+Bootstrap: docker
+From: alpine:3.18
+%post
+apk add git emacs
+%startscript
+emacs
+%runscript
+emacs "$@"
