@@ -46,8 +46,9 @@
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org-roam/")
-
 (after! org
+  (setq org-agenda-files `(,(expand-file-name "~/org-roam")
+                           ,(expand-file-name "~/org-roam/daily")))
   (org-add-link-type
    "color" nil
    (lambda (path desc format)
@@ -57,10 +58,21 @@
       ((eq format 'latex)
        (format "{\\color{%s}%s}" path desc))))))
 
+(map! "C-S-o" #'evil-window-right
+      "C-S-n" #'evil-window-left
+      "C-S-i" #'evil-window-up
+      "C-S-e" #'evil-window-down)
+
 (map! :localleader
       (:map org-mode-map
        "B" (lambda () (interactive) (org-beamer-export-to-pdf))))
 
+(map! (:map pdf-view-mode-map
+            "e" #'pdf-view-next-line-or-next-page
+            "i" #'pdf-view-previous-line-or-previous-page))
+(after! pdf-tools
+  (evil-define-key* 'normal pdf-view-mode-map "e" #'pdf-view-next-line-or-next-page)
+  (evil-define-key* 'normal pdf-view-mode-map "i" #'pdf-view-previous-line-or-previous-page))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
