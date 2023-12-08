@@ -1,7 +1,7 @@
 Bootstrap: docker
 From: alpine:3.18
 %post
-apk add git emacs
+apk add git emacs bash
 %startscript
 emacs
 %runscript
