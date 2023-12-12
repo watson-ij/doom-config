@@ -25,9 +25,11 @@
       (let ((host (system-name)))
         (cond
          ((string= host "ArchBeauty") 40)
+         ((string= host "ArchBeasty") 38)
          (t 24))))
 
-(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font" :size font-size :weight 'semi-light))
+(setq doom-font (font-spec :family "CaskaydiaCove Nerd Font"
+                            :size font-size :weight 'normal)) ;;'semi-light))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -53,6 +55,9 @@
 (after! org
   (setq org-agenda-files `(,(expand-file-name "~/org-roam")
                            ,(expand-file-name "~/org-roam/daily")))
+  (setq
+   org-latex-images-centered nil
+   )
   (org-add-link-type
    "color" nil
    (lambda (path desc format)
@@ -66,6 +71,13 @@
       "C-S-n" #'evil-window-left
       "C-S-i" #'evil-window-up
       "C-S-e" #'evil-window-down)
+
+(after! org-journal
+  (setq org-journal-dir "~/org-roam/daily"
+        org-journal-carryover-items ""
+        org-journal-date-format " "
+        org-journal-time-format ""
+        org-journal-file-format "%Y_%m_%d.org"))
 
 (map! :localleader
       (:map org-mode-map
