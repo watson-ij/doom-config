@@ -75,8 +75,11 @@
 (after! org-journal
   (setq org-journal-dir "~/org-roam/daily"
         org-journal-carryover-items ""
-        org-journal-date-format " "
-        org-journal-time-format ""
+        org-journal-time-prefix "** "
+        org-journal-date-prefix "* "
+        org-journal-date-format "%A, %x"
+        org-journal-time-format " "
+        org-journal-file-type 'weekly
         org-journal-file-format "%Y_%m_%d.org"))
 
 (map! :localleader
@@ -89,6 +92,11 @@
 (after! pdf-tools
   (evil-define-key* 'normal pdf-view-mode-map "e" #'pdf-view-next-line-or-next-page)
   (evil-define-key* 'normal pdf-view-mode-map "i" #'pdf-view-previous-line-or-previous-page))
+
+(use-package! code-cells)
+
+(after! org
+  (add-hook 'org-agenda-mode-hook #'turn-off-evil-mode nil))
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
